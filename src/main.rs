@@ -161,4 +161,18 @@ fn process_fn() {
     // } else {
     //     8
     // }
+    #[derive(Debug)]
+    enum Dir {
+        XX,
+        YY,
+        HH
+    }
+    let bb = Dir::XX;
+    match bb {
+        Dir::XX => println!("{:#?}",Dir::XX),
+        Dir::YY => println!("{:#?}",Dir::YY),
+        Dir::HH => println!("{:#?}",Dir::HH),
+        _ => print!("呵呵")
+    }
+
 }
