@@ -1,4 +1,4 @@
-use std::io;
+mod test;
 
 fn main() {
     println!("你好世界");
@@ -9,6 +9,7 @@ fn main() {
     enum_fn();
     arr_fn();
     process_fn();
+    test::hello();
 }
 
 fn test() -> String {
@@ -16,7 +17,7 @@ fn test() -> String {
     let _b = 's';
     let _c = true;
     let _d = "HH";
-    let mut f = String::from("testaskaksj");
+    let mut f = String::from("test");
     let _bb = &_d;
     let g = String::from("测试字符串切片");
     let h = &g[0..6];
@@ -75,16 +76,15 @@ fn struct_fn() {
 }
 
 // 枚举
+/**
+ * 初始化实例
+ */
 fn enum_fn() {
     #[derive(Debug)]
     enum IpAddr {
-        HH,
-        BB,
         DD,
     }
-    let hh = IpAddr::HH;
     let dd = IpAddr::DD;
-    // print!("{:?}", hh);
     dbg!(dd);
     #[derive(Debug)]
 
@@ -97,7 +97,6 @@ fn enum_fn() {
     #[derive(Debug)]
     enum Option<T> {
         Some(T),
-        None,
     }
 
     let absent_number: Option<String> = Option::Some(String::from("212"));
@@ -141,7 +140,7 @@ fn process_fn() {
         println!("{:#?}111", i);
     }
     for j in 0..arr.len() {
-        if (j > 2) {
+        if j > 2 {
             print!("{:#?}---", arr[j]);
             continue;
         } else {
@@ -165,14 +164,19 @@ fn process_fn() {
     enum Dir {
         XX,
         YY,
-        HH
+        HH,
     }
     let bb = Dir::XX;
-    match bb {
-        Dir::XX => println!("{:#?}",Dir::XX),
-        Dir::YY => println!("{:#?}",Dir::YY),
-        Dir::HH => println!("{:#?}",Dir::HH),
-        _ => print!("呵呵")
-    }
+    let _cc = match bb {
+        Dir::XX => println!("{:#?}", Dir::XX),
+        Dir::YY => println!("{:#?}", Dir::YY),
+        Dir::HH => println!("{:#?}", Dir::HH),
+        _ => print!("呵呵"),
+    };
 
+    if let Dir::XX = bb {
+        println!("{:#?}", Dir::XX);
+    } else {
+        println!("{:#?}", Dir::YY);
+    }
 }
