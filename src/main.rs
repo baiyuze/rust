@@ -1,5 +1,5 @@
 mod test;
-
+use std::collections::HashMap;
 fn main() {
     println!("你好世界");
     let t = test();
@@ -10,6 +10,8 @@ fn main() {
     arr_fn();
     process_fn();
     test::hello();
+    trait_fn();
+    fn_vec();
 }
 
 fn test() -> String {
@@ -179,4 +181,106 @@ fn process_fn() {
     } else {
         println!("{:#?}", Dir::YY);
     }
+}
+
+fn trait_fn() {
+    trait Draw {
+        fn draw(&self) -> String;
+    }
+
+    impl Draw for u8 {
+        fn draw(&self) -> String {
+            format!("f64: {}", *self)
+        }
+    }
+
+    fn draw1(x: Box<dyn Draw>) -> String {
+        println!("----u8----: {}", x.draw());
+        x.draw()
+    }
+
+    draw1(Box::new(11));
+    // UI 组件
+
+    // 定义一个结构体
+    struct Screen {
+        // 里面的元素都是Draw 的特征对象
+        components: Vec<Box<dyn Draw>>,
+    }
+
+    impl Screen {
+        fn run(&self) {
+            for component in self.components.iter() {
+                let b = component.draw();
+                println!("==={}===", b);
+            }
+        }
+    }
+
+    struct SelectBox {
+        width: u32,
+        height: u32,
+        options: Vec<String>,
+    }
+
+    impl Draw for SelectBox {
+        fn draw(&self) -> String {
+            format!("SelectBox: {}", self.width * self.height)
+        }
+    }
+
+    let bb = String::from("Hello");
+
+    impl Draw for String {
+        fn draw(&self) -> String {
+            format!("{}", *self)
+        }
+    }
+
+    let screen = Screen {
+        components: vec![
+            Box::new(SelectBox {
+                width: 75,
+                height: 10,
+                options: vec![
+                    String::from("Yes"),
+                    String::from("Maybe"),
+                    String::from("No"),
+                ],
+            }),
+            Box::new(33),
+            Box::new(4),
+            Box::new(5u8),
+            Box::new(bb),
+        ],
+    };
+    screen.run();
+}
+
+fn fn_vec() {
+    trait IpAddr {
+        fn display(&self);
+    }
+    #[derive(Debug)]
+    struct V4(String);
+    impl IpAddr for V4 {
+        fn display(&self) {
+            println!("ipv4: {:?}", self.0)
+        }
+    }
+    let mut v = Vec::new();
+    let mut _v2 = vec![1, 2, 3];
+    let mut _v3: Vec<Box<String>> = vec![Box::new(String::from("hello"))];
+    let mut _v4 = vec![
+        Box::new(V4("127.0.0.1".to_string())),
+        Box::new(V4(String::from("127.0.0.1"))),
+    ];
+    v.push(1);
+    v.push(2);
+    v.pop();
+
+    // hashMap
+
+    let mut map = HashMap::new();
+    map.insert("div", 1);
 }

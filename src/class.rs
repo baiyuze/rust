@@ -106,10 +106,27 @@ fn main() {
         age: 18,
     };
 
-    println!("{:#?}--", m.get_age())
+    println!("{:#?}--", m.get_age());
 
-    fn test(item: &impl MyTrait) {
-      format!("{:#?}", item.get_age())
+    // fn test(item: &impl MyTrait) {
+    //     format!("{:#?}", item.get_age());
+    // }
+
+    // 特征对象
+
+    trait Draw {
+        fn draw(&self) -> String;
     }
-    fn test2<T: MyTrait>(item: &T, item2: &T) -> String {}
+
+    impl Draw for u8 {
+        fn draw(&self) -> String {
+            format!("f64: {}", *self)
+        }
+    }
+
+    fn draw1(x: Box<dyn Draw>) -> String {
+        x.draw()
+    }
+
+    draw1(Box::new(11));
 }
