@@ -179,4 +179,36 @@ fn process_fn() {
     } else {
         println!("{:#?}", Dir::YY);
     }
+    let x: u8 = 1;
+    let y: u8 = 2;
+    let x1 = "data";
+    let y1 = "test1";
+
+    fn test(x: u8, y: u8) -> u8 {
+        if x > y {
+            x
+        } else {
+            y
+        }
+    }
+
+    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+        if x.len() > y.len() {
+            x
+        } else {
+            y
+        }
+    }
+
+    // fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    //     if x.len() > y.len() {
+    //         x
+    //     } else {
+    //         y
+    //     }
+    // }
+
+    let bb = test(x, y);
+    let longest = longest(x1, y1);
+    println!("{}, {}-------", bb, longest);
 }
